@@ -12,8 +12,6 @@ node-dependencies:package.json 참고
 infura 가입 후 연계 토큰등을 설정 파일에 저장함.   
   
   
-*transaction***  
-> 60초 설정이지만, 네트워크 노드에 따라 변경이 필요 할 수 있다.  
 
 
 
