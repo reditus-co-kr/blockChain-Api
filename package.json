@@ -1,0 +1,60 @@
+{
+  "name": "blockchain-api",
+  "version": "1.0.0",
+  "description": "reditus rms system blockChain api app",
+  "main": "bin/www.js",
+  "scripts": {
+    "test": "node hello-world.js",
+    "test-express": "set NODE_ENV=testNet&&node express.js",
+    "privateNet": "set NODE_ENV=privateNet&&node bin/www",
+    "testNet": "set NODE_ENV=testNet&&node bin/www",
+    "mainNet": "set NODE_ENV=mainNet&&node bin/www",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --hot --inline"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.reditus.co.kr:7990/scm/rmspp/blockchain-api.git"
+  },
+  "keywords": [
+    "api",
+    "blockchain",
+    "rms"
+  ],
+  "author": "dadfkim@hanmail.net",
+  "license": "MIT,ISC,Unlicense",
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "dependencies": {
+    "aes-js": "^3.1.2",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.2",
+    "crypto-js": "^3.1.9-1",
+    "dotenv": "^6.2.0",
+    "ethereumjs-abi": "^0.6.6",
+    "express": "^4.16.4",
+    "express-ip": "^1.0.3",
+    "fast-safe-stringify": "^2.0.6",
+    "lodash": "^4.17.11",
+    "moment-timezone": "^0.5.23",
+    "truffle-hdwallet-provider": "^1.0.5",
+    "validator": "^10.11.0",
+    "web3": "^1.0.0-beta.34"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-polyfill": "^6.26.0",
+    "copy-webpack-plugin": "^5.0.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  }
+}
