@@ -10,11 +10,28 @@ node-dependencies:package.json 참고
 > 설정  
 .env 파일을 .envsample 파일을 참고하여, 각 환경에 맞춰 작성한다.  
 infura 가입 후 연계 토큰등을 설정 파일에 저장함.   
+
+> 전역 설정  
+nodemon, express-generator 두가지는 전역 설치 한다.  
+그외는 package.json 으로 설치 진행.  
+linux 환경 백그라운드 실행은 forever 를 설치 사용한다.(sudo npm install forever -g)   
   
   
-
-
-
+***transaction***  
+> 등록 시간의 변동 폭이 크므로 별도로 제어하지 않고 대기한다.  
+  
+*가스비용*  
+> 5gwei 를 기본으로 성정 한다.(거래 등록 속도 증가 필요시 증가요함)  
+  
+  
+***linux***  
+> forever 사용하여 deamon으로 구동  
+env NODE_ENV=testNet forever start ./bin/www.js  
+env NODE_ENV=mainNet forever start ./bin/www.js  
+forever list  
+forever stop 번호  
+  
+  
 ### 주의 사항  
 > privateKey 에 대한 유의  
 > web3 version bug 에 대해 유의 하여야 한다.  

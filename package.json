@@ -5,10 +5,10 @@
   "main": "bin/www.js",
   "scripts": {
     "test": "node hello-world.js",
-    "test-express": "set NODE_ENV=testNet&&node express.js",
-    "privateNet": "set NODE_ENV=privateNet&&node bin/www",
-    "testNet": "set NODE_ENV=testNet&&node bin/www",
-    "mainNet": "set NODE_ENV=mainNet&&node bin/www",
+    "test-express": "set NODE_ENV=testNet&&nodemon express.js",
+    "privateNet": "set NODE_ENV=privateNet&&nodemon bin/www",
+    "testNet": "set NODE_ENV=testNet&&nodemon bin/www",
+    "mainNet": "set NODE_ENV=mainNet&&nodemon bin/www",
     "build": "webpack",
     "watch": "webpack --watch",
     "start": "webpack-dev-server --hot --inline"
@@ -30,10 +30,11 @@
     ]
   },
   "dependencies": {
+    "@types/node": "^11.11.5",
     "aes-js": "^3.1.2",
+    "app-root-path": "^2.1.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
-    "chalk": "^2.4.2",
     "crypto-js": "^3.1.9-1",
     "dotenv": "^6.2.0",
     "ethereumjs-abi": "^0.6.6",
@@ -42,9 +43,12 @@
     "fast-safe-stringify": "^2.0.6",
     "lodash": "^4.17.11",
     "moment-timezone": "^0.5.23",
+    "morgan": "^1.9.1",
     "truffle-hdwallet-provider": "^1.0.5",
     "validator": "^10.11.0",
-    "web3": "^1.0.0-beta.34"
+    "web3": "^1.0.0-beta.34",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^3.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

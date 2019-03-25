@@ -1,7 +1,6 @@
 const redTokenCore = require('../lib/redTokenCore.js');
 const transactions = require('../api/transactions.js');
-const chalk = require('chalk');
-const utils = require('../lib/utils.js');
+const logger = require('../config/winston.js');
 
 // view functions
 exports.show = (req, res) => {
@@ -9,7 +8,6 @@ exports.show = (req, res) => {
     if (!tokenId && isNaN(tokenId)) {
       return res.status(400).json({error: 'Incorrect tokenId'});
     }
-    //console.log(req.ipInfo);
     const transactionArguments = [tokenId];
     return transactions.handleView('redTokenInfo', transactionArguments, res);
 };
@@ -26,7 +24,6 @@ exports.shareUsershow = (req, res) => {
 exports.tokenURIshow = (req, res) => {
     const tokenId = parseInt(req.params.tokenId, 10);
     if (!tokenId && isNaN(tokenId)) {
-      console.log('['+utils.getTimeLog()+`]:::Error:tokenId:::[${chalk.red(tokenId)}]`);
       return res.status(400).json({error: 'Incorrect tokenId'});
     }
     const transactionArguments = [tokenId];
@@ -40,7 +37,7 @@ exports.updateTokenURI = async (req, res) => {
   if (!tokenUri.length) {
     return res.status(400).json({error: 'Incorrenct tokenUri'});
   }
-  console.log(`tokenUri:::[${chalk.yellow(tokenUri)}]`);
+  logger.info(`tokenUri:::[${tokenUri}]`);
 
   const transactionArguments = [tokenUri];
   return await transactions.handleWrite('setTokenMetadataBaseURI', transactionArguments, res);
@@ -57,8 +54,8 @@ exports.updateCollectedAmount = async (req, res) => {
   if (!amount && isNaN(amount)) {
     return res.status(400).json({error: 'Incorrect amount'});
   }
-  console.log(`tokenId:::[${chalk.yellow(tokenId)}]`);
-  console.log(`amount:::[${chalk.yellow(amount)}]`);
+  logger.info(`tokenId:::[${tokenId}]`);
+  logger.info(`amount:::[${amount}]`);
 
   const transactionArguments = [
     tokenId,
@@ -87,9 +84,9 @@ exports.burnAmountByShareUser = async (req, res) => {
   if (!amount && isNaN(amount)) {
     return res.status(400).json({error: 'Incorrect amount'});
   }
-  console.log(`tokenId:::[${chalk.yellow(tokenId)}]`);
-  console.log(`account:::[${chalk.yellow(account)}]`);
-  console.log(`amount:::[${chalk.yellow(amount)}]`);
+  logger.info(`tokenId:::[${tokenId}]`);
+  logger.info(`account:::[${account}]`);
+  logger.info(`amount:::[${amount}]`);
 
   const transactionArguments = [
     tokenId,
@@ -126,10 +123,10 @@ exports.createRedToken = async (req, res) => {
       return res.status(400).json({error: 'Incorrect listingAmount'});
     }
 
-    console.log(`account:::[${chalk.yellow(account)}]`);
-    console.log(`rmsBondNo:::[${chalk.yellow(rmsBondNo)}]`);
-    console.log(`bondAmount:::[${chalk.yellow(bondAmount)}]`);
-    console.log(`listingAmount:::[${chalk.yellow(listingAmount)}]`);
+    logger.info(`account:::[${account}]`);
+    logger.info(`rmsBondNo:::[${rmsBondNo}]`);
+    logger.info(`bondAmount:::[${bondAmount}]`);
+    logger.info(`listingAmount:::[${listingAmount}]`);
 
     const transactionArguments = [
       account,
@@ -157,8 +154,8 @@ exports.destroyRedToken = async (req, res) => {
       return res.status(400).json({error: 'Incorrect tokenId'});
     }
     
-    console.log(`account:::[${chalk.yellow(account)}]`);
-    console.log(`tokenId:::[${chalk.yellow(tokenId)}]`);
+    logger.info(`account:::[${account}]`);
+    logger.info(`tokenId:::[${tokenId}]`);
 
     const transactionArguments = [
       account,

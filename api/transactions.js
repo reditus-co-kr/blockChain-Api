@@ -1,10 +1,8 @@
 const config = require('../config/environments.js');
 const redTokenCore = require('../lib/redTokenCore.js');
-const utils = require('../lib/utils.js');
 const _ = require('lodash');
-const chalk = require('chalk');
 const stringify = require('fast-safe-stringify');
-const redTokenFuncABI = require('../lib/redTokenFuncABI.js');
+const logger = require('../config/winston.js');
 
 const handleWrite = async (functionName, transactionArguments, res, account) => {
 
@@ -18,7 +16,7 @@ const handleWrite = async (functionName, transactionArguments, res, account) => 
           gasPrice = data.gasPrice;
           gasLimit = data.gasLimit;
         }).catch(function(err){
-          console.error(err);
+          logger.error(err);
         });
   }
 
@@ -28,8 +26,8 @@ const handleWrite = async (functionName, transactionArguments, res, account) => 
     gas : gasLimit
   };
 
-  console.log(
-    chalk.yellow('['+utils.getTimeLog()+']:::handleWrite req data:'),
+  logger.info(
+    '::: handleWrite req data :::' +
     stringify(
       _.merge(
         {
@@ -46,13 +44,13 @@ const handleWrite = async (functionName, transactionArguments, res, account) => 
   const callData = redTokenCore.contract.methods[functionName](...transactionArguments).send(rawTx);
   callData
     .once('transactionHash', function(hash) {
-      console.log('['+utils.getTimeLog()+`]:::Transaction: ${chalk.yellow(hash)}`);
+      logger.info(`::: Transaction :::${hash}`);
     })
     .once('receipt', function(receipt) {
-      console.log('['+utils.getTimeLog()+']:::Receipt:', chalk.green(stringify(receipt, null, 2)));
+      logger.info('::: Receipt :::' + stringify(receipt, null, 2));
     })
     .on('error', function(error) {
-      console.log(chalk.red('['+utils.getTimeLog()+']:::Error:'), error);
+      logger.error(':::' + error);
     })
     .then(function(receipt){
       return res.json(receipt);
@@ -69,8 +67,8 @@ const handleWrite = async (functionName, transactionArguments, res, account) => 
 
 const handleView = async (functionName, transactionArguments, res) => {
   
-  console.log(
-    chalk.yellow('['+utils.getTimeLog()+']:::::handleView req data:'),
+  logger.info(
+    '::: handleView req data :::' +
     stringify(
       _.merge(
         {
@@ -85,10 +83,10 @@ const handleView = async (functionName, transactionArguments, res) => {
 
   const callData = redTokenCore.contract.methods[functionName](...transactionArguments).call();
   callData.then(function(result) {
-    console.log('['+utils.getTimeLog()+']:::Receipt:', chalk.green(stringify(result, null, 2)));
+    logger.info('::: Receipt :::' + stringify(result, null, 2));
     return res.json(parseData(result, functionName));
   }).catch(function(error){
-    console.log(chalk.red('['+utils.getTimeLog()+']:::Error:'), error);
+    logger.error(':::' + error);
     if ( redTokenCore.web3.utils.isHexStrict(error) ){
       const convertStr = redTokenCore.web3.utils.hexToUtf8(error);
       return res.status(400).json({error:convertStr});
@@ -104,14 +102,14 @@ const parseData = (callData, functionName) => {
 
   const getters = redTokenGetter[functionName];
 
-  console.log('getter ::', getters);
+  logger.info('::: getter :::' + getters);
   
   for(var i=0;i<getters.length;i++ ){
     callData[getters[i]] = callData[i];
     delete callData[i];
   }
 
-  console.log('['+utils.getTimeLog()+']:::reslut parsing data ::', chalk.green(stringify(callData, null, 2)));
+  logger.info('::: reslut parsing data :::' + stringify(callData, null, 2));
 
   return callData;
 };
