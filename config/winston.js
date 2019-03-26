@@ -1,6 +1,7 @@
 const appRoot = require('app-root-path');
 const { createLogger, format, transports } = require('winston');
-const winstonDaily = require('winston-daily-rotate-file');
+require('winston-daily-rotate-file');
+
 const moment = require('moment-timezone');
 
 const myFormat = format.printf(info => `${info.timestamp} [${info.level}]: ${info.label} - ${info.message}`);
@@ -37,7 +38,7 @@ const appendTimestamp = format((info, opts) => {
   }
 };
 
-const transport = new (winstonDaily)({
+const transport = new (transports.DailyRotateFile)({
     level: 'silly',
     showLevel: true,
     dirname: `${appRoot}/logs/`,
@@ -47,7 +48,7 @@ const transport = new (winstonDaily)({
     maxSize: '5m'
 });
 
-const errorTransport = new (winstonDaily)({
+const errorTransport = new (transports.DailyRotateFile)({
     level: 'error',
     showLevel: true,
     dirname: `${appRoot}/logs/`,
