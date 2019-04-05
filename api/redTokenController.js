@@ -30,6 +30,19 @@ exports.tokenURIshow = (req, res) => {
     return transactions.handleView('tokenURI', transactionArguments, res);
 };
 
+exports.tokensOf = (req, res) => {
+    //account
+    const account = req.params.account || '';
+    if (!account.length) {
+        return res.status(400).json({error: 'Incorrenct account'});
+    }
+    if (!redTokenCore.web3.utils.isAddress(account)){
+        return res.status(400).json({error: 'not account type'});
+    }
+  const transactionArguments = [account];
+  return transactions.handleView('tokensOf', transactionArguments, res);
+};
+
 // update functions
 exports.updateTokenURI = async (req, res) => {
   //tokenUri

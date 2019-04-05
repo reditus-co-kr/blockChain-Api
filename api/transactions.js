@@ -59,7 +59,7 @@ const handleWrite = async (functionName, transactionArguments, res, account) => 
         const convertStr = redTokenCore.web3.utils.hexToUtf8(error);
         return res.status(400).json({error:convertStr});
       }else{
-        return res.status(400).json(error.toString());
+        return res.status(400).json({error:error.message});
       }
     });
 
@@ -91,7 +91,7 @@ const handleView = async (functionName, transactionArguments, res) => {
       const convertStr = redTokenCore.web3.utils.hexToUtf8(error);
       return res.status(400).json({error:convertStr});
     }else{
-      return res.status(400).json(error.toString());
+      return res.status(400).json({error:error.message});
     }
   })
 };
@@ -102,15 +102,16 @@ const parseData = (callData, functionName) => {
 
   const getters = redTokenGetter[functionName];
 
-  logger.info('::: getter :::' + getters);
+  logger.info('::: convert getter :::' + getters);
   
-  for(var i=0;i<getters.length;i++ ){
-    callData[getters[i]] = callData[i];
-    delete callData[i];
+  if ( getters != undefined ){
+    for(var i=0;i<getters.length;i++ ){
+      callData[getters[i]] = callData[i];
+      delete callData[i];
+    }
+
+    logger.info('::: reslut parsing data :::' + stringify(callData, null, 2));
   }
-
-  logger.info('::: reslut parsing data :::' + stringify(callData, null, 2));
-
   return callData;
 };
 

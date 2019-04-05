@@ -21,6 +21,7 @@ app.use('/redToken', require('./api/redTokenRouter.js'));
 //            info/:tokenId
 //            info/shareUsers/:tokenId
 //            info/tokenURI/:tokenId
+//            info/tokensOf/:account
 // PUT        tokenURI/:tokenUri
 // PUT        collectedAmount/:tokenId/:amount
 // PUT        burnAmountByShareUser/:tokenId/:account/:amount
